@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import FieldContext from "./FieldContext";
 // export default class Field extends Component {
 //   static contextType = FieldContext;
@@ -36,7 +36,7 @@ import FieldContext from "./FieldContext";
 // }
 
 export default function Field(props) {
-  const {children, name} = props;
+  const { children, name } = props;
 
   const {
     getFieldValue,
@@ -46,6 +46,7 @@ export default function Field(props) {
 
   const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
+  // 用useEffect执行时机不对，因为useEffect是异步的，会导致父组件setFieldsValue时,Field还没注册
   React.useLayoutEffect(() => {
     const unregister = registerFieldEntities({
       props,
@@ -60,7 +61,7 @@ export default function Field(props) {
       onChange: (e) => {
         const newValue = e.target.value;
         // set state
-        setFieldsValue({[name]: newValue});
+        setFieldsValue({ [name]: newValue });
       },
     };
   };

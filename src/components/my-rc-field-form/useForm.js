@@ -21,6 +21,7 @@ class FormStore {
     this.fieldEntities.push(entity);
 
     return () => {
+      // 取反过滤掉注册动组件
       this.fieldEntities = this.fieldEntities.filter((item) => item !== entity);
       delete this.store[entity.props.name];
     };
@@ -108,6 +109,7 @@ export default function useForm(form) {
     if (form) {
       formRef.current = form;
     } else {
+      // 类组件使用<Form>组件时,没传form属性,需要内部创建一个
       const formStore = new FormStore();
       formRef.current = formStore.getForm();
     }
